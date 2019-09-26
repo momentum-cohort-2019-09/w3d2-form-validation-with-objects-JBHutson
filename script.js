@@ -309,7 +309,7 @@ class CreditCardField extends Field {
     }
 
     checkIsCreditCardNum(){
-        let creditCardNum = this.field.value.trim()
+        let creditCardNum = this.field.value.trim();
         let regex = new RegExp("^[0-9]{16}$");
         if (!regex.test(creditCardNum)){
             return false
@@ -335,6 +335,7 @@ class CreditCardField extends Field {
     }
 
     getCardBrand(){
+        let creditCardNum = this.field.value.trim();
         let firstNum = creditCardNum.charAt(0);
         if (firstNum == '3'){
             return 'American Express';
@@ -410,7 +411,7 @@ class Price {
         let cost = 0;
         for (let i=0; i<this.daysParked; i++){
             date = new Date(date.getTime() + 86400000);
-            if (d2.getDay() == 0 || d2.getDay() == 6){
+            if (date.getDay() == 0 || date.getDay() == 6){
                 cost += 7;
             } else {
                 cost += 5;
@@ -420,17 +421,18 @@ class Price {
     }
 
     appendPriceChild (costText, creditCard){
-        if (this.field.parentElement.lastElementChild.classList.contains('price')){
+        let butt = document.getElementById('submit-button');
+        if (butt.parentElement.lastElementChild.classList.contains('price')){
             let child = document.createElement('p');
             child.innerHTML = "<span >" + "your total cost is: $" + costText + ' on your ' + creditCard + " </span>";
             child.classList.add("price")
-            this.field.parentElement.removeChild(this.field.parentElement.childNodes[this.field.parentElement.childNodes.length-1]);
-            this.field.parentElement.appendChild(child);
+            butt.parentElement.removeChild(butt.parentElement.childNodes[butt.parentElement.childNodes.length-1]);
+            butt.parentElement.appendChild(child);
         } else {
             let child = document.createElement('p');
             child.innerHTML = "<span >" + "your total cost is: $" + costText + ' on your ' + creditCard + " </span>";
             child.classList.add("price")
-            this.field.parentElement.appendChild(child);
+            butt.parentElement.appendChild(child);
         }
     }
 }
